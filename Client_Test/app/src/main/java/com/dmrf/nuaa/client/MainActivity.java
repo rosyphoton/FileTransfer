@@ -22,6 +22,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         read=findViewById(R.id.read);
         username=findViewById(R.id.username);
         password=findViewById(R.id.password);
-        final String base_url = "http://192.168.1.13/";
+        final String base_url = "http://172.18.92.228/";
 
 
         ok.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String filepath = Environment.getExternalStorageDirectory().toString() + "/DCIM/Camera/image_demo.jpg";
+                String filepath = Environment.getExternalStorageDirectory().toString() + "/TEST/humans.txt";
                 String url2 = base_url + "upload";
                 SendFile(url2, filepath);
             }
@@ -107,12 +108,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendFile(String url, String filepath)
     {
-        MediaType Image = MediaType.parse("image/jpeg; charset=utf-8");
+        MediaType TxtFile = MediaType.parse("text/plain; charset=utf-8");
+//        MediaType Image = MediaType.parse("image/jpeg");
         File file = new File(filepath);
-        RequestBody body = RequestBody.create(Image, file);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(), RequestBody.create(TxtFile, file))
+                .build();
+
         Request request = new Request.Builder()
                 .url(url)
-                .post(body)
+                .post(requestBody)
                 .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
