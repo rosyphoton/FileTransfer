@@ -8,7 +8,7 @@ app = Flask(__name__)
 basedir=os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
-app.config['UPLOAD_FOLDER'] = 'static\\uploads'
+app.config['UPLOAD_FOLDER'] = 'statics\\uploads'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'txt', 'jpg'])
 
 def allowed_file(filename):
@@ -22,9 +22,13 @@ def test():
 @app.route('/upload', methods=['POST'])
 def upload():
     upload_file = request.files['file']
+    file_dir = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir)
+
     if upload_file and allowed_file(upload_file.filename):
         filename = secure_filename(upload_file.filename)
-        upload_file.save(os.path.join(app.root_path, app.config['UPLOAD_FOLDER'], filename))
+        upload_file.save(os.path.join(file_dir, filename))
         return 'hello,successful'
     else:
         return 'hello,failed'
