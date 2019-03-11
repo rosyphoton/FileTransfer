@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PET2018 Client</string>
+    <string name="record_audio">Record Audio</string>
+    <string name="record_motion">Record Motion Data</string>
+    <string name="play_audio">Play Back Audio</string>
+    <string name="stop_recording">Stop Recording</string>
+    <string name="analyze_audio">Analyze Audio</string>
+</resources>

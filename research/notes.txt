@@ -1,0 +1,22 @@
+Frequency Responses Speakers:
+ - JBL Flip 4: 35 Hz
+ - Laptop Speaker: 120 Hz
+ - KRK Speaker: 10 Hz
+
+Frequency Responses Microphones:
+ - Huawei Mate 10 Lite: 25 Hz
+ - Sony Smartphone: 45 Hz
+
+Audible Frequencies:
+ - down to at least 25 Hz
+
+Vibrations Response:
+ - KRK Speaker: 36 Hz
+ - JBL Flip 4: 57 Hz
+ - => audible!
+
+Next steps:
+ - [x] hide in music
+ - [ ] synchronization to hidden message start
+ - [ ] motion sensor decoding
+ - [ ] assess maximum symbol frequency for hidden channel

@@ -1,0 +1,7 @@
+__pycache__
+!server/sounds/underlyingMusicPiaono.wav
+!server/sounds/my-immortal.wav
+!server/sounds/simpleTestSound.wav
+server/sounds
+venv/
+*.wav

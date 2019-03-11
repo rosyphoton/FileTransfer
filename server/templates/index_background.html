@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+<script type="text/javascript">
+  $(document).ready( function () {
+    $('form').submit( function () {
+      var formdata = $(this).serialize();
+            
+            var path = "/sendText"
+            if (document.getElementById('vibration').checked) {
+                path = "/sendVibration"
+            }
+            
+      $.ajax({
+          type: "GET",
+          data: formdata  ,
+          url: path,
+            success: function(data) {
+          var audioSound = document.getElementById('audioPlayerSound');
+          var sourceSound = document.getElementById('audioSourceSound');
+          
+          
+          var playMusic = document.getElementById('playMusic');
+          var audioMusic = document.getElementById('audioPlayerMusic');
+          var sourceMusic = document.getElementById('audioSourceMusic');        
+          
+          sourceSound.src = data;         
+          audioSound.load();
+          audioSound.play();
+          
+          if(playMusic.checked) {
+            //sourceMusic.src = "/sounds/get?file=my-immortal";
+            //audioMusic.load();
+            audioMusic.currentTime = 180;
+            audioMusic.play();
+          } else {
+            audioMusic.pause();
+          }
+          
+          return;
+        },
+       });
+      return false;
+    });
+  });
+</script>
+<script>
+  function stopSound(){
+    var audioSound = document.getElementById('audioPlayerSound');
+    var audioMusic = document.getElementById('audioPlayerMusic');
+    audioSound.pause();
+    audioMusic.pause();
+    audioMusic.currentTime = 180;
+    audioSound.currentTime = 0;
+  }
+</script>
+</HEAD>
+<BODY>
+  <form action="/sendText"  style="display: inline;">
+    Text:<br/>
+    <input type="text" name="data" placeholder="Text you want to send"/>
+    <input type="checkbox" id="vibration" name="vibration"/>vibration
+        <input type="checkbox" id="playMusic" name="playMusic"/>play music
+    <br/><br/>
+    <input type="submit" value="Play"/>
+  </form>
+  
+  <input id="stopSound" type="button" value="Stop" onclick="stopSound();"/>
+  
+  <audio id="audioPlayerSound" controls>
+    <source id="audioSourceSound" src="" type="audio/wav">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <audio id="audioPlayerMusic" controls>
+    <source id="audioSourceMusic" src="/sounds/get?file=my-immortal" type="audio/wav">
+    Your browser does not support the audio element.
+  </audio>
+</BODY>
+</HTML>
